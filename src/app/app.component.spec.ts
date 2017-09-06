@@ -57,6 +57,20 @@ describe('AppComponent', () => {
 
       // });
     });
+
+    describe(`Unit Test`, () => {
+      it(`shoudld have 'agree' field initial value is false`, () => {
+        expect(target.agree).toBe(false);
+      });
+
+      it(`shoudld have 'buttonText' field initial value is 'Submit'`, () => {
+        expect(target.buttonText).toBe('Submit');
+      });
+
+      it(`shoudld have 'checkBoxLabel' field initial value is 'I agree'`, () => {
+        expect(target.checkBoxLabel).toBe('I agree');
+      });
+    });
   });
 
 });
