@@ -1,3 +1,4 @@
-<h1>
-  {{title}}
-</h1>
+<button id="atdd-button" [disabled]="!agree">{{ buttonText }}</button>
+<br>
+<input id="atdd-checkbox" type="checkbox" [(ngModel)]="agree">
+<label for="atdd-checkbox">{{ checkBoxLabel }}</label>
