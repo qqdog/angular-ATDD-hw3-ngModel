@@ -1,32 +1,62 @@
-import { TestBed, async } from '@angular/core/testing';
-
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+/** 要測試 button 跟 checkbox 的話，一定要 import FormsModule */
+import { FormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let fixture: ComponentFixture<AppComponent>;
+  let component: AppComponent;
+  let debugElement: DebugElement;
+  let htmlElement: HTMLElement;
+  let target: AppComponent;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
-  }));
+      imports: [
+        FormsModule
+      ],
+    });
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  }));
-
-  it(`should have as title 'app works!'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+    debugElement = fixture.debugElement;
+    target = new AppComponent();
     fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
-  }));
+  });
+
+  describe(`ATDDCheckBox`, () => {
+    describe(`Intergration Test`, () => {
+      it(`should use 'buttonText' field`, () => {
+        component.buttonText = 'fake';
+        fixture.detectChanges();
+
+        htmlElement = debugElement.query(By.css('button')).nativeElement;
+        expect(htmlElement.textContent).toBe('fake');
+      });
+
+      /** todo, component.agree can not be set to false */
+      // it(`should use 'agree' field on 'disabled' attribute in HTML`, () => {
+      //   component.agree = false;
+      //   fixture.detectChanges();
+
+      //   htmlElement = debugElement.query(By.css('button')).nativeElement;
+      //   expect(htmlElement.getAttribute('disabled')).toBe(true);
+      // });
+
+      it(`should have 'agree' field on 'ngModel' directive`, () => {
+        debugElement.query(By.css('#atdd-checkbox')).triggerEventHandler('change', {target: {checked: true}});
+        expect(component.agree).toBe(true);
+      });
+
+      // it(`should use 'checkBoxLebel' field connecting with checkbox in HTML`, () => {
+
+      // });
+    });
+  });
+
 });
